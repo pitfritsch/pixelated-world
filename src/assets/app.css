@@ -21,4 +21,6 @@ h3,
 h4,
 h5 {
   color: #e8f3ff;
+  margin: 0;
+  padding: 0;
 }

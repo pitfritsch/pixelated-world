@@ -1,12 +1,23 @@
+import { reactive } from "vue";
 import api from "./api";
+import { handleError } from "./utils";
 
 export class Monster {
-  static async getRandom() {
+  state = reactive({ isLoading: false });
+
+  async getRandom() {
+    this.state.isLoading = true;
+    let svg = "";
+    let error = undefined;
     try {
-      const { data } = await api.get("/monsters/random/json");
-      console.log(data);
+      const { data } = await api.get("/monsters/random");
+      svg = data;
     } catch (e) {
-      console.error(e);
+      error = handleError(e);
+    } finally {
+      this.state.isLoading = false;
     }
+
+    return { svg, error };
   }
 }
